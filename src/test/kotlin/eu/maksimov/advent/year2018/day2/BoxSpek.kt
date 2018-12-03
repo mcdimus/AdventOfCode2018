@@ -6,7 +6,7 @@ import org.jetbrains.spek.api.dsl.it
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class BoxSpek : Spek({
+object BoxSpek : Spek({
     describe("A Box") {
         describe("id contains no duplicate chars") {
             val box by memoized { Box("abcdef") }
