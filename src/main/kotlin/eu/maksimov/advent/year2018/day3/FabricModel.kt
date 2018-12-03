@@ -23,4 +23,15 @@ class FabricModel(size: Int) {
         return fabric.map { row -> row.count { it == NOK } }.sum()
     }
 
+    fun isIntact(claim: FabricClaim): Boolean {
+        for (i in claim.topSpan..(claim.topSpan + claim.height - 1)) {
+            for (j in claim.leftSpan..(claim.leftSpan + claim.width - 1)) {
+                if (fabric[i][j] == NOK) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
 }
