@@ -9,7 +9,7 @@ data class FabricClaim(
 ) {
 
     companion object {
-        val regex = Regex("#(?<id>\\d+) @ (?<lspan>\\d+),(?<tspan>\\d+): (?<width>\\d+)x(?<height>\\d+)")
+        private val regex = Regex("#(?<id>\\d+) @ (?<lspan>\\d+),(?<tspan>\\d+): (?<width>\\d+)x(?<height>\\d+)")
 
         fun of(claimSpec: String): FabricClaim {
             val matchGroups = regex.find(claimSpec)?.groups
