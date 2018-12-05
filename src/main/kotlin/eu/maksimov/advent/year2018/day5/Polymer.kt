@@ -3,7 +3,6 @@ package eu.maksimov.advent.year2018.day5
 class Polymer(private val value: String) {
 
     companion object {
-        private const val LETTERS_COUNT = 26
         private const val DIFF_BETWEEN_CAPITAL_AND_NON_CAPITAL_LETTER = 32
     }
 
@@ -29,7 +28,7 @@ class Polymer(private val value: String) {
         Math.abs(a - b) == DIFF_BETWEEN_CAPITAL_AND_NON_CAPITAL_LETTER
 
     fun enhance(): Polymer {
-        return generateSequence({ 'a' }, { it + 1 }).take(LETTERS_COUNT)
+        return CharRange('a', 'z').asSequence()
             .map { value.replace(it.toString(), "", ignoreCase = true) }
             .map { Polymer(it).simplify() }
             .minBy { it.getValue().length }!!
