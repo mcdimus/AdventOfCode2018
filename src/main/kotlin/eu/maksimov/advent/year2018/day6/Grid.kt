@@ -1,10 +1,10 @@
 package eu.maksimov.advent.year2018.day6
 
-class Grid(basePoints: List<Point>) {
+class Grid(private val basePoints: List<Point>, private val safeRegionMaxDistance: Int) {
 
-    val min: Point
-    val max: Point
-    val grid: MutableList<Point> = arrayListOf()
+    private val min: Point
+    private val max: Point
+    private val points: MutableList<Point> = arrayListOf()
 
     init {
         val minX = basePoints.map { it.x }.min()!!
@@ -20,7 +20,7 @@ class Grid(basePoints: List<Point>) {
                 val point = Point(x, y).apply {
                     closestBasePoint = findClosestBasePoint(basePoints, this)
                 }
-                grid.add(point)
+                points.add(point)
             }
         }
     }
@@ -39,19 +39,25 @@ class Grid(basePoints: List<Point>) {
 
     fun getSizeOfLargestFiniteArea(): Int {
         val infiniteBasePoints = mutableSetOf<Point>()
-        for (point in grid) {
+        for (point in points) {
             if (point.x == min.x || point.x == max.x || point.y == min.y || point.y == max.y) {
                 point.closestBasePoint?.let {
                     infiniteBasePoints.add(it)
                 }
             }
         }
-        return grid.filterNot { it.closestBasePoint == null }
+        return points.filterNot { it.closestBasePoint == null }
             .filterNot { infiniteBasePoints.contains(it.closestBasePoint) }
             .groupingBy { it.closestBasePoint!! }
             .eachCount()
             .map { it.value }
             .max()!!
+    }
+
+    fun getSafeRegionSize(): Int {
+        return points.map { point -> basePoints.sumBy { basePoint -> getManhattanDistance(point, basePoint) } }
+            .filter { it < safeRegionMaxDistance }
+            .count()
     }
 
 }

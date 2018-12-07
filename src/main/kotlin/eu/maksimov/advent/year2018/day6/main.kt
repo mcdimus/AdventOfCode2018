@@ -10,9 +10,16 @@ fun main() {
         )
     }
 
-    val grid = Grid(basePoints)
+    val grid = Grid(basePoints, 10_000)
 
     // part 1
     println("What is the size of the largest area that isn't infinite?")
     println(grid.getSizeOfLargestFiniteArea())
+
+    // part 2
+    println(
+        "What is the size of the region containing all locations which have a total distance to all given  " +
+                "coordinates of less than 10000?"
+    )
+    println(grid.getSafeRegionSize())
 }
