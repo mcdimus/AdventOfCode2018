@@ -26,26 +26,19 @@ class Grid(private val basePoints: List<Point>, private val safeRegionMaxDistanc
     }
 
     private fun findClosestBasePoint(basePoints: List<Point>, point: Point): Point? {
-        val basePointDistances = basePoints.map { it to getManhattanDistance(it, point) }.toMap()
+        val basePointDistances = basePoints.map { it to it.manhattanDistanceTo(point) }.toMap()
         val minDistance = basePointDistances.values.min()!!
         return if (basePointDistances.values.count { it == minDistance } == 1) {
             basePointDistances.filter { it.value == minDistance }.map { it.key }.single()
         } else null
     }
 
-    private fun getManhattanDistance(a: Point, b: Point): Int {
-        return Math.abs(a.x - b.x) + Math.abs(a.y - b.y)
-    }
-
     fun getSizeOfLargestFiniteArea(): Int {
-        val infiniteBasePoints = mutableSetOf<Point>()
-        for (point in points) {
-            if (point.x == min.x || point.x == max.x || point.y == min.y || point.y == max.y) {
-                point.closestBasePoint?.let {
-                    infiniteBasePoints.add(it)
-                }
-            }
-        }
+        val infiniteBasePoints = points.asSequence()
+            .filter { it.x == min.x || it.x == max.x || it.y == min.y || it.y == max.y }
+            .mapNotNull { it.closestBasePoint }
+            .toSet()
+
         return points.filterNot { it.closestBasePoint == null }
             .filterNot { infiniteBasePoints.contains(it.closestBasePoint) }
             .groupingBy { it.closestBasePoint!! }
@@ -55,7 +48,7 @@ class Grid(private val basePoints: List<Point>, private val safeRegionMaxDistanc
     }
 
     fun getSafeRegionSize(): Int {
-        return points.map { point -> basePoints.sumBy { basePoint -> getManhattanDistance(point, basePoint) } }
+        return points.map { point -> basePoints.sumBy { basePoint -> point.manhattanDistanceTo(basePoint) } }
             .filter { it < safeRegionMaxDistance }
             .count()
     }
