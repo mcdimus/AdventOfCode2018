@@ -26,7 +26,7 @@ class Grid(private val basePoints: List<Point>, private val safeRegionMaxDistanc
     }
 
     private fun findClosestBasePoint(basePoints: List<Point>, point: Point): Point? {
-        val basePointDistances = basePoints.map { Pair(it, getManhattanDistance(it, point)) }.toMap()
+        val basePointDistances = basePoints.map { it to getManhattanDistance(it, point) }.toMap()
         val minDistance = basePointDistances.values.min()!!
         return if (basePointDistances.values.count { it == minDistance } == 1) {
             basePointDistances.filter { it.value == minDistance }.map { it.key }.single()
