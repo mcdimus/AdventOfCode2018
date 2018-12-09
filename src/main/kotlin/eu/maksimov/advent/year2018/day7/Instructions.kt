@@ -50,4 +50,53 @@ class Instructions {
         return stepOrder
     }
 
+    fun getDurationWithParallelWorkers(workers: Int): Int {
+        val clock = Clock
+        val freeWorkers = ArrayDeque<Worker>(workers)
+        for (i in 1..workers) {
+            freeWorkers.offer(Worker(i))
+        }
+        val busyWorkers = ArrayDeque<Worker>(workers)
+
+        val availableSteps = object : PriorityQueue<String>() {
+            override fun offer(e: String?) = when {
+                contains(e) -> false
+                else -> super.offer(e)
+            }
+        }
+        steps.filter { it.prerequisites.isEmpty() }.forEach { availableSteps.add(it.name) }
+
+        var stepOrder = ""
+        for (i in 0..Int.MAX_VALUE) {
+            if (availableSteps.isEmpty() && busyWorkers.isEmpty()) {
+                break
+            }
+            if (availableSteps.isNotEmpty() && freeWorkers.isNotEmpty()) {
+                availableSteps.map { it }.forEach { availableStepName ->
+                    val currentStepName = availableStepName
+                    val currentStep = steps.first { it.name == currentStepName }
+                    if (currentStep.isPrerequisitesCompleted(stepOrder) && freeWorkers.isNotEmpty()) {
+                        availableSteps.remove(availableStepName)
+                        val worker = freeWorkers.poll()
+                        worker.task = currentStep
+                        busyWorkers.offer(worker)
+                    }
+                }
+            }
+            clock.tick()
+            busyWorkers.forEach { it.doWork() }
+            busyWorkers.filter { it.isReady() }.forEach {
+                if (it.task != null) {
+                    stepOrder += it.task?.name!!
+                    availableSteps.addAll(it.task?.nextSteps!!)
+                }
+                it.task = null
+                busyWorkers.remove(it)
+                freeWorkers.offer(it)
+            }
+        }
+
+        return clock.getSeconds()
+    }
+
 }

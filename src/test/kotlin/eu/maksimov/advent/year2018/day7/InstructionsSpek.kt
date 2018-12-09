@@ -8,20 +8,28 @@ import org.jetbrains.spek.api.dsl.it
 object InstructionsSpek : Spek({
 
     describe("An Instructions") {
+        val instructions by memoized {
+            Instructions().apply {
+                addStep("C", "A")
+                addStep("C", "F")
+                addStep("A", "B")
+                addStep("A", "D")
+                addStep("B", "E")
+                addStep("D", "E")
+                addStep("F", "E")
+            }
+        }
+
         it("calculates correct steps order") {
-            val instructions = Instructions()
-
-            instructions.addStep("C", "A")
-            instructions.addStep("C", "F")
-            instructions.addStep("A", "B")
-            instructions.addStep("A", "D")
-            instructions.addStep("B", "E")
-            instructions.addStep("D", "E")
-            instructions.addStep("F", "E")
-
             val result = instructions.getStepsOrder()
 
             assertThat(result).isEqualTo("CABDFE")
+        }
+
+        it("calculates duration with 2 workers") {
+            val result = instructions.getDurationWithParallelWorkers(2)
+
+            assertThat(result).isEqualTo(258)
         }
     }
 

@@ -17,4 +17,8 @@ fun main() {
     println("In what order should the steps in your instructions be completed?")
     println(instructions.getStepsOrder())
 
+    // part 2
+    println("With 5 workers and the 60+ second step durations described above, how long will it take to complete all of the steps?")
+    println(instructions.getDurationWithParallelWorkers(5))
+
 }
