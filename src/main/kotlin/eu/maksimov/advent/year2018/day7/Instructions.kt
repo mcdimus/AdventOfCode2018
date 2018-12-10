@@ -52,11 +52,11 @@ class Instructions {
 
     fun getDurationWithParallelWorkers(workers: Int): Int {
         val clock = Clock
+        val busyWorkers = ArrayDeque<Worker>(workers)
         val freeWorkers = ArrayDeque<Worker>(workers)
         for (i in 1..workers) {
             freeWorkers.offer(Worker(i))
         }
-        val busyWorkers = ArrayDeque<Worker>(workers)
 
         val availableSteps = object : PriorityQueue<String>() {
             override fun offer(e: String?) = when {
@@ -73,8 +73,7 @@ class Instructions {
             }
             if (availableSteps.isNotEmpty() && freeWorkers.isNotEmpty()) {
                 availableSteps.map { it }.forEach { availableStepName ->
-                    val currentStepName = availableStepName
-                    val currentStep = steps.first { it.name == currentStepName }
+                    val currentStep = steps.first { it.name == availableStepName }
                     if (currentStep.isPrerequisitesCompleted(stepOrder) && freeWorkers.isNotEmpty()) {
                         availableSteps.remove(availableStepName)
                         val worker = freeWorkers.poll()
