@@ -14,7 +14,6 @@ object NodeSpek : Spek({
             assertThat(result.metadataN).isEqualTo(3)
             assertThat(result.children).isEmpty()
             assertThat(result.metadata).containsExactly(10, 11, 12)
-            assertThat(result.values()).containsExactly(0, 3, 10, 11, 12)
         }
 
         it("created with one child (with zero children)") {
@@ -24,7 +23,6 @@ object NodeSpek : Spek({
             assertThat(result.metadataN).isEqualTo(1)
             assertThat(result.children).containsExactly(Node(0, 1, 99))
             assertThat(result.metadata).containsExactly(2)
-            assertThat(result.values()).containsExactly(1, 1, 0, 1, 99, 2)
         }
 
         it("created with more complex hierarchy") {
@@ -37,7 +35,6 @@ object NodeSpek : Spek({
                 Node(1, 1, 0, 1, 99, 2)
             )
             assertThat(result.metadata).containsExactly(1, 1, 2)
-            assertThat(result.values()).containsExactly(2, 3, 0, 3, 10, 11, 12, 1, 1, 0, 1, 99, 2, 1, 1, 2)
             assertThat(result.checksum()).isEqualTo(138)
 
             assertThat(result.value()).isEqualTo(66)
