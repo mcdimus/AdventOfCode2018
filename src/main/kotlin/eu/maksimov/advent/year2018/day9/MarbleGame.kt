@@ -2,7 +2,7 @@ package eu.maksimov.advent.year2018.day9
 
 class MarbleGame(val playersNum: Int, val lastMarble: Int) {
 
-    private val board = MarbleBoard(lastMarble)
+    private val board = MarbleBoard()
     private val players = (1..playersNum).map { Player(it) }
 
     fun play() {

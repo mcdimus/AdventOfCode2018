@@ -11,19 +11,15 @@ object MarbleBoardSpek : Spek({
             val board = MarbleBoard()
 
             assertThat(board.placeMarble(1)).isZero()
-            assertThat(board.currentMarbleIndex).isEqualTo(1)
             assertThat(board.marbles).containsExactly(0, 1)
 
             assertThat(board.placeMarble(2)).isZero()
-            assertThat(board.currentMarbleIndex).isEqualTo(1)
             assertThat(board.marbles).containsExactly(0, 2, 1)
 
             assertThat(board.placeMarble(3)).isZero()
-            assertThat(board.currentMarbleIndex).isEqualTo(3)
             assertThat(board.marbles).containsExactly(0, 2, 1, 3)
 
             assertThat(board.placeMarble(4)).isZero()
-            assertThat(board.currentMarbleIndex).isEqualTo(1)
             assertThat(board.marbles).containsExactly(0, 4, 2, 1, 3)
         }
 
@@ -32,7 +28,6 @@ object MarbleBoardSpek : Spek({
             (1..22).forEach { board.placeMarble(it) }
 
             assertThat(board.placeMarble(23)).isEqualTo(32)
-            assertThat(board.currentMarbleIndex).isEqualTo(6)
             assertThat(board.marbles)
                 .containsExactly(0, 16, 8, 17, 4, 18, 19, 2, 20, 10, 21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15)
         }

@@ -4,8 +4,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
-import java.util.*
-import kotlin.system.measureTimeMillis
 
 object MarbleGameSpek : Spek({
     describe("A MarbleGame") {
@@ -29,17 +27,6 @@ object MarbleGameSpek : Spek({
             marbleGame.play()
 
             assertThat(marbleGame.getWinner().getScore()).isEqualTo(146373)
-        }
-
-        it("modulo") {
-            val arrayList = ArrayList<Int>(7_149_800)
-            val measureTimeMillis = measureTimeMillis {
-                for (i in 1..7_149_800) {
-                    arrayList.add(if (i < 10) 0 else i - 7, i % 23)
-                }
-            }
-            println(arrayList.sum())
-            println("measureTimeMillis = ${measureTimeMillis}")
         }
     }
 })
