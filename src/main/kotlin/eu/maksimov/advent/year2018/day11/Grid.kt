@@ -16,15 +16,15 @@ data class Grid(val serialNumber: Int) {
         }
     }
 
-    fun getMostPowerfulSquareCoords(): Pair<Int, Int> {
+    fun getMostPowerfulSquareCoords(squareSize: Int): SquareData {
         var bestSum = Int.MIN_VALUE
         var bestSumCoords = Int.MIN_VALUE to Int.MIN_VALUE
 
-        for (y in 0..(SIZE - 3)) {
-            for (x in 0..(SIZE - 3)) {
+        for (y in 0..(SIZE - squareSize)) {
+            for (x in 0..(SIZE - squareSize)) {
                 var sum = 0
-                for (y1 in y..(y + 2)) {
-                    for (x1 in x..(x + 2)) {
+                for (y1 in y until (y + squareSize)) {
+                    for (x1 in x until (x + squareSize)) {
                         sum += powerLevels[y1][x1]
                     }
                 }
@@ -35,6 +35,16 @@ data class Grid(val serialNumber: Int) {
             }
         }
 
-        return bestSumCoords
+        return SquareData(
+            x = bestSumCoords.first,
+            y = bestSumCoords.second,
+            power = bestSum,
+            size = squareSize
+        )
     }
+
+    fun getMostPowerfulSquare(): SquareData {
+        return (1..SIZE).map { getMostPowerfulSquareCoords(it) }.maxBy { it.power }!!
+    }
+
 }

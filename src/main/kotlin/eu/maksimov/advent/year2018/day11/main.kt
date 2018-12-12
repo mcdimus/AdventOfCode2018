@@ -5,5 +5,9 @@ fun main() {
 
     // part 1
     println("What is the X,Y coordinate of the top-left fuel cell of the 3x3 square with the largest total power?")
-    println(grid.getMostPowerfulSquareCoords())
+    println(grid.getMostPowerfulSquareCoords(3))
+
+    // part 2
+    println("What is the X,Y,size identifier of the square with the largest total power?")
+    println(grid.getMostPowerfulSquare())
 }
