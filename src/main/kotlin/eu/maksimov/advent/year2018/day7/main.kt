@@ -13,6 +13,7 @@ fun main() {
         instructions.addStep(pair.first, pair.second)
     }
 
+    // TODO: refactor solution
     // part 1
     println("In what order should the steps in your instructions be completed?")
     println(instructions.getStepsOrder())

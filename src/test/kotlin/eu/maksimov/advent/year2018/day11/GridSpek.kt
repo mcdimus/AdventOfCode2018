@@ -7,10 +7,10 @@ import org.jetbrains.spek.api.dsl.it
 
 object GridSpek : Spek({
     describe("A Grid") {
-        it("finds coords of best square") {
+        it("finds coords of best square with size 3") {
             val grid = Grid(18)
 
-            assertThat(grid.getMostPowerfulSquareCoords()).isEqualTo(33 to 45)
+            assertThat(grid.getMostPowerfulSquareCoords(3)).isEqualTo(33 to 45)
         }
     }
 })

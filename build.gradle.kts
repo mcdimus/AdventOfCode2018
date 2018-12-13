@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.10"
+    kotlin("jvm") version "1.3.11"
 }
 
 group = "eu.maksimov.advent"
@@ -19,6 +19,7 @@ tasks.withType<Test> {
 
 dependencies {
     compile(kotlin("stdlib-jdk8"))
+    compile(group = "org.jetbrains.kotlin", name = "kotlin-reflect", version = "1.3.11")
 
     testImplementation("org.junit.platform:junit-platform-runner:1.3.2")
     testImplementation("org.junit.platform:junit-platform-launcher:1.3.2")
@@ -35,6 +36,6 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.withType<Wrapper> {
-    gradleVersion = "5.0"
+    gradleVersion = "4.8"
     distributionType = Wrapper.DistributionType.ALL
 }
