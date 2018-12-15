@@ -27,14 +27,10 @@ object GardenSpek : Spek({
             )
 
             garden.evolve()
-
             assertThat(garden.getCurrentState()).contains("...#...#....#.....#..#..#..#...........")
-            assertThat(garden.countPlantsThroughtoutGenerateion()).isEqualTo(18)
 
             garden.evolve()
-
             assertThat(garden.getCurrentState()).contains("...##..##...##....#..#..#..##..........")
-            assertThat(garden.countPlantsThroughtoutGenerateion()).isEqualTo(29)
 
             for (i in 1..18) {
                 garden.evolve()
